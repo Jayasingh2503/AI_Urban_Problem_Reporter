@@ -1,11 +1,11 @@
 import os
 import uuid
 from datetime import datetime
-from flask import Flask, render_template, request, redirect, url_for, session, flash, jsonify
+from flask import Flask, render_template, request, redirect, url_for, session, flash, jsonify, send_from_directory
 from werkzeug.security import generate_password_hash, check_password_hash
 from models.database import db, User, Report
 from utils.classifier import classify_image
-from flask import send_from_directory
+
 
 app = Flask(__name__)
 app.secret_key = os.environ.get("SECRET_KEY", "urban_reporter_secret_2024")
@@ -65,11 +65,7 @@ def logout():
     flash("You have been logged out.", "info")
     return redirect(url_for("index"))
 
-@app.route('/sw.js')
-def sw():
-    from flask import send_from_directory
-    return send_from_directory('static', 'sw.js',
-                               mimetype='application/javascript')
+
 
 # ── CITIZEN ───────────────────────────────────
 @app.route("/dashboard")
