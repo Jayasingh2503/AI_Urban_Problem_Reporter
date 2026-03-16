@@ -1,0 +1,48 @@
+{% extends "base.html" %}
+{% block title %}Admin – Report #{{ report.id }}{% endblock %}
+{% block content %}
+<div class="row">
+  <div class="col-md-7">
+    <h3 class="fw-bold mb-3">{{ report.category_icon() }} Report #{{ report.id }}</h3>
+    <img src="{{ url_for('static', filename='uploads/' ~ report.image_path) }}"
+         class="img-fluid rounded shadow mb-4"
+         style="max-height:400px;width:100%;object-fit:cover;"
+         onerror="this.src='https://via.placeholder.com/600x400?text=No+Image'"/>
+  </div>
+  <div class="col-md-5">
+    <div class="card shadow-sm mb-3">
+      <div class="card-body">
+        <h5 class="fw-bold">Report Details</h5>
+        <table class="table table-borderless table-sm">
+          <tr><th>Category</th>    <td>{{ report.detected_category }}</td></tr>
+          <tr><th>Confidence</th>  <td>{{ "%.1f"|format(report.confidence * 100) }}%</td></tr>
+          <tr><th>Location</th>    <td>{{ report.location }}</td></tr>
+          <tr><th>Reported By</th> <td>{{ reporter.name }} ({{ reporter.email }})</td></tr>
+          <tr><th>Date</th>        <td>{{ report.timestamp.strftime('%d %b %Y, %H:%M') }}</td></tr>
+          {% if report.description %}
+          <tr><th>Description</th><td>{{ report.description }}</td></tr>
+          {% endif %}
+        </table>
+      </div>
+    </div>
+    <div class="card shadow-sm">
+      <div class="card-body">
+        <h5 class="fw-bold">Update Status</h5>
+        <form method="POST" action="{{ url_for('update_status', report_id=report.id) }}">
+          <select name="status" class="form-select mb-3">
+            {% for s in ["Pending","In Progress","Resolved"] %}
+              <option {% if report.status==s %}selected{% endif %}>{{ s }}</option>
+            {% endfor %}
+          </select>
+          <button type="submit" class="btn btn-success w-100">
+            <i class="fas fa-save me-2"></i>Save Status
+          </button>
+        </form>
+      </div>
+    </div>
+    <a href="{{ url_for('admin_dashboard') }}" class="btn btn-outline-secondary w-100 mt-3">
+      <i class="fas fa-arrow-left me-2"></i>Back to Dashboard
+    </a>
+  </div>
+</div>
+{% endblock %}

@@ -1,0 +1,88 @@
+{% extends "base.html" %}
+{% block title %}Report an Issue{% endblock %}
+{% block content %}
+<div class="row">
+  <div class="col-md-7">
+    <h3 class="fw-bold mb-4"><i class="fas fa-camera text-primary me-2"></i>Report an Urban Issue</h3>
+    <div class="card shadow-sm">
+      <div class="card-body p-4">
+        <form method="POST" enctype="multipart/form-data" id="reportForm">
+
+          <div class="mb-3">
+            <label class="form-label fw-semibold">Upload Image <span class="text-danger">*</span></label>
+            <input type="file" name="image" id="imageInput" class="form-control"
+                   accept="image/*" required/>
+            <div class="form-text">PNG, JPG, GIF, WEBP — max 16 MB</div>
+          </div>
+
+          <div id="previewBox" class="mb-3 d-none">
+            <img id="previewImg" src="#" alt="Preview"
+                 class="img-fluid rounded shadow-sm" style="max-height:260px"/>
+          </div>
+
+          <div class="mb-3">
+            <label class="form-label fw-semibold">Location <span class="text-danger">*</span></label>
+            <input type="text" name="location" class="form-control"
+                   placeholder="e.g. MG Road, Near City Mall, Bhopal" required/>
+          </div>
+
+          <div class="mb-4">
+            <label class="form-label fw-semibold">Description
+              <span class="text-muted small">(optional)</span>
+            </label>
+            <textarea name="description" class="form-control" rows="3"
+                      placeholder="Briefly describe the problem..."></textarea>
+          </div>
+
+          <button type="submit" class="btn btn-primary w-100" id="submitBtn">
+            <i class="fas fa-paper-plane me-2"></i>Submit Report
+          </button>
+        </form>
+      </div>
+    </div>
+  </div>
+
+  <div class="col-md-5 mt-4 mt-md-0">
+    <div class="card border-0 bg-light">
+      <div class="card-body">
+        <h5 class="fw-bold mb-3"><i class="fas fa-info-circle text-info me-2"></i>How it Works</h5>
+        <ol class="list-group list-group-flush list-group-numbered">
+          <li class="list-group-item bg-transparent">Upload a clear photo of the issue.</li>
+          <li class="list-group-item bg-transparent">AI analyses the image in seconds.</li>
+          <li class="list-group-item bg-transparent">Issue is auto-classified and logged.</li>
+          <li class="list-group-item bg-transparent">Authorities review and resolve it.</li>
+        </ol>
+        <hr/>
+        <h6 class="fw-semibold">Detectable Categories</h6>
+        <div class="d-flex flex-wrap gap-2 mt-2">
+          {% for cat in ["🗑️ Garbage","🕳️ Pothole","💡 Streetlight","💧 Water Leak",
+                          "⚠️ Illegal Dump","🚧 Road Damage","🎨 Graffiti",
+                          "🌳 Fallen Tree","🚰 Drainage"] %}
+            <span class="badge bg-secondary">{{ cat }}</span>
+          {% endfor %}
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}
+{% block scripts %}
+<script>
+document.getElementById("imageInput").addEventListener("change", function () {
+  const file = this.files[0];
+  if (file) {
+    const reader = new FileReader();
+    reader.onload = e => {
+      document.getElementById("previewImg").src = e.target.result;
+      document.getElementById("previewBox").classList.remove("d-none");
+    };
+    reader.readAsDataURL(file);
+  }
+});
+document.getElementById("reportForm").addEventListener("submit", function () {
+  const btn = document.getElementById("submitBtn");
+  btn.disabled = true;
+  btn.innerHTML = '<span class="spinner-border spinner-border-sm me-2"></span>Analysing with AI…';
+});
+</script>
+{% endblock %}

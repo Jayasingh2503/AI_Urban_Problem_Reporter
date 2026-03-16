@@ -1,0 +1,27 @@
+body { background: #f4f6fb; font-family: 'Segoe UI', sans-serif; }
+.navbar { border-bottom: 3px solid #0a4fa0; }
+
+.hero-section {
+  background: linear-gradient(135deg, #e8f0fe 0%, #ffffff 100%);
+  border: 1px solid #d0dff8;
+}
+
+.category-chip {
+  background: #fff;
+  border: 1px solid #d0dff8;
+  border-radius: 20px;
+  padding: 6px 12px;
+  font-size: 0.82rem;
+  text-align: center;
+  transition: background 0.2s;
+}
+.category-chip:hover { background: #e8f0fe; }
+
+.report-card { transition: transform 0.15s, box-shadow 0.15s; }
+.report-card:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 6px 20px rgba(0,0,0,0.10) !important;
+}
+.report-thumbnail { height: 180px; object-fit: cover; }
+.alert { border-radius: 10px; }
+footer { font-size: 0.82rem; }

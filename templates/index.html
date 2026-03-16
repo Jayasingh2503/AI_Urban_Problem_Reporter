@@ -1,0 +1,49 @@
+{% extends "base.html" %}
+{% block title %}Home – Urban Reporter{% endblock %}
+{% block content %}
+<div class="hero-section text-center py-5 rounded-3 mb-5">
+  <i class="fas fa-city fa-4x text-primary mb-3"></i>
+  <h1 class="display-5 fw-bold">AI Urban Problem Reporter</h1>
+  <p class="lead text-muted col-md-7 mx-auto">
+    Snap a photo of potholes, broken lights, garbage, water leaks, and more.
+    Our AI instantly classifies the issue and routes it to the right municipal team.
+  </p>
+  <div class="mt-4">
+    <a href="{{ url_for('register') }}" class="btn btn-primary btn-lg me-3">
+      <i class="fas fa-user-plus me-2"></i>Get Started
+    </a>
+    <a href="{{ url_for('login') }}" class="btn btn-outline-primary btn-lg">
+      <i class="fas fa-sign-in-alt me-2"></i>Login
+    </a>
+  </div>
+</div>
+
+<div class="row g-4 mb-5">
+  {% set features = [
+    ("fas fa-camera",        "primary", "Upload a Photo",     "Take a clear photo of the issue you want to report."),
+    ("fas fa-brain",         "success", "AI Classification",  "Our CNN model detects and classifies the problem instantly."),
+    ("fas fa-map-marker-alt","warning", "Location Tagging",   "Pin the exact spot so authorities can find it fast."),
+    ("fas fa-check-circle",  "info",    "Track Resolution",   "Follow your report: Pending → In Progress → Resolved.")
+  ] %}
+  {% for icon, color, title, text in features %}
+  <div class="col-md-3">
+    <div class="card h-100 border-0 shadow-sm text-center p-3">
+      <i class="{{ icon }} fa-2x text-{{ color }} mb-3"></i>
+      <h5 class="fw-semibold">{{ title }}</h5>
+      <p class="text-muted small">{{ text }}</p>
+    </div>
+  </div>
+  {% endfor %}
+</div>
+
+<h4 class="fw-bold mb-3">Detectable Issue Categories</h4>
+<div class="row g-2">
+  {% for emoji, cat in [("🗑️","Garbage / Waste"),("🕳️","Pothole"),("💡","Broken Streetlight"),
+                         ("💧","Water Leakage"),("⚠️","Illegal Dumping"),("🚧","Road Damage"),
+                         ("🎨","Graffiti"),("🌳","Fallen Tree"),("🚰","Drainage Blockage"),("📍","Other")] %}
+  <div class="col-6 col-md-2">
+    <div class="category-chip">{{ emoji }} {{ cat }}</div>
+  </div>
+  {% endfor %}
+</div>
+{% endblock %}
