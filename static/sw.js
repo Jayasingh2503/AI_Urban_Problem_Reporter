@@ -1,5 +1,5 @@
 const CACHE = "urban-reporter-v1";
-const URLS  = ["/", "/dashboard", "/report", "/static/css/style.css", "/static/js/main.js"];
+const URLS  = ["/", "/static/css/style.css", "/static/js/main.js"];
 
 self.addEventListener("install", e => {
   e.waitUntil(caches.open(CACHE).then(c => c.addAll(URLS)));

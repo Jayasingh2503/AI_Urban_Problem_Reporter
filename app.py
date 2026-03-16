@@ -65,6 +65,12 @@ def logout():
     flash("You have been logged out.", "info")
     return redirect(url_for("index"))
 
+@app.route('/sw.js')
+def sw():
+    from flask import send_from_directory
+    return send_from_directory('static', 'sw.js',
+                               mimetype='application/javascript')
+
 # ── CITIZEN ───────────────────────────────────
 @app.route("/dashboard")
 def dashboard():
